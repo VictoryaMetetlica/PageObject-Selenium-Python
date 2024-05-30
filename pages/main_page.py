@@ -1,4 +1,4 @@
-# реализуем Page Object, который будет связан с главной страницей интернет-магазина.
+# Page Object, который будет связан с главной страницей интернет-магазина.
 
 from base_page import BasePage      # в зависимости от пакетов может потребоваться точка from .base_page import BasePage
 from selenium import webdriver
