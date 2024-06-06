@@ -1,6 +1,4 @@
 import time
-
-import PageObject_Selenium_Python.pages.locators
 from PageObject_Selenium_Python.pages.main_page import MainPage
 from PageObject_Selenium_Python.pages.login_page import LoginPage
 
