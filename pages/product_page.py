@@ -1,13 +1,11 @@
 import time
-
 import pytest
-
 from PageObject_Selenium_Python.pages.base_page import BasePage
 from PageObject_Selenium_Python.pages.locators import ProductPageLocators
 
 class ProductPage(BasePage):
     def should_add_product(self, browser):
-        self.should_be_newYear_url(browser)
+        # self.should_be_newYear_url(browser) в третьем задании не нужно
         self.should_be_add_to_basket_button()
         self.click_add_to_basket()
 

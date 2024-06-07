@@ -9,23 +9,19 @@
 # Чтобы тест был независимым от контента: Измените методы проверки таким образом, чтобы они принимали как аргумент
 # название товара и цену товара. Сделайте метод, который вытаскивает из элемента текст-название товара и возвращает его.
 # Сделайте такой же метод для цены.
+# Task 3
+# Найти баг на странице из списка ссылок, пометить падающий тест как xfail или skip.
 
 import time
 import pytest
 from PageObject_Selenium_Python.pages.product_page import ProductPage
 from PageObject_Selenium_Python.conftest import browser
 
-links = [
-    "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019",
-    "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear"
-    ]
-
     # фикстура с параметризацией
-@pytest.mark.parametrize('product_link', links)
+@pytest.mark.parametrize('promo_offer', [0, 1, 2, 3, 4, 5, 6, pytest.param(7, marks=pytest.mark.xfail), 8, 9])
 
-
-def test_guest_can_add_product_to_basket(browser, product_link):
-    link = product_link
+def test_guest_can_add_product_to_basket(browser, promo_offer):
+    link = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{promo_offer}"
         # инициализируем Page Object, передаем в конструктор экземпляр драйвера и url адрес
     page = ProductPage(browser, link)
         # Открываем страницу товара
