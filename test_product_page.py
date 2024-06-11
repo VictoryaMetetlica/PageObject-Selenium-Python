@@ -12,6 +12,7 @@
 # Task 3
 # Найти баг на странице из списка ссылок, пометить падающий тест как xfail или skip.
 
+
 import time
 import pytest
 from PageObject_Selenium_Python.pages.product_page import ProductPage
@@ -32,7 +33,7 @@ def test_guest_can_add_product_to_basket(browser, promo_offer):
         # сопоставляем название товара в каталоге и в сообщении
     page.should_be_same_product_name(page.return_product_name(browser))
     page.should_be_same_price(page.return_price(browser))
-    time.sleep(2)
+    time.sleep(1)
 
 
 

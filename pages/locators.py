@@ -14,4 +14,5 @@ class ProductPageLocators():
     ADDED_PRODUCT_NAME_LOCATOR = ('css selector', '.alertinner strong')
     PRICE_LOCATOR = ('css selector', 'p.price_color')
     BASKET_VALUE_LOCATOR = ('css selector', '.alertinner p strong')
+    SUCCESS_MESSAGE = ('css selector', 'alert-success')
 

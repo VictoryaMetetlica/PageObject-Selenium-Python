@@ -1,6 +1,9 @@
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.common.exceptions import TimeoutException
 import math
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 # базовая страница (с вспомогательными методами для работы с драйвером), от которой наследуются остальные классы
 class BasePage():
@@ -12,6 +15,7 @@ class BasePage():
         self.browser = browser
         self.url = url
             # добавим команду для неявного ожидания со значением по умолчанию в 10
+        self.timeout = timeout                  # устанавливаем значение времени ожидания для атрибута объекта
         self.browser.implicitly_wait(timeout)
 
         # реализуем метод is_element_present, в котором будем перехватывать исключение
@@ -20,6 +24,32 @@ class BasePage():
             self.browser.find_element(how, what)
         except NoSuchElementException:
             return False
+
+        return True
+
+        # абстрактный метод, который проверяет, что элемент не появляется на странице в течение заданного времени
+    def is_not_element_present(self, how, what, timeout=4):
+            # Устанавливаем неявное ожидание на 0
+        self.browser.implicitly_wait(0)
+
+        try:
+            # Теперь будет использоваться только таймер из явного ожидания
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return True
+        # Устанавливаем таймер обратно на значение указанное в конструкторе
+        finally:
+            self.browser.implicitly_wait(self.timeout)
+
+        return False
+
+    def is_disappeared(self, how, what, timeout=4):
+        try:
+            (WebDriverWait(self.browser, timeout, 1, TimeoutException).\
+             until_not(EC.presence_of_element_located((how, what))))
+        except TimeoutException:
+            return False
+
         return True
 
     # добавим метод open. Он должен открывать нужную страницу в браузере, используя метод get(). open() может обращаться

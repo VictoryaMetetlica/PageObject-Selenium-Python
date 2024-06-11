@@ -33,9 +33,19 @@ class ProductPage(BasePage):
         added_product_name = self.browser.find_element(*ProductPageLocators.ADDED_PRODUCT_NAME_LOCATOR).text
         assert product_name == added_product_name, \
             f'Product name in catalog is "{product_name}" but in message is "{added_product_name}"'
-        time.sleep(2)
+        time.sleep(1)
 
     def should_be_same_price(self, price):
         basket_value = self.browser.find_element(*ProductPageLocators.BASKET_VALUE_LOCATOR).text
         assert price == basket_value, f'The price is "{price}" but the basket value is "{basket_value}"'
-        time.sleep(2)
+        time.sleep(1)
+
+        # метод, который проверяет, что элемент не появляется на странице в течение заданного времени:
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should not be"
+
+        # проверить, что элемент исчезает
+    def should_disappeared_success_message(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should disappeared"
