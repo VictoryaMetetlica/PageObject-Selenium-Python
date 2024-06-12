@@ -10,7 +10,7 @@ class ProductPage(BasePage):
 
     def should_be_newYear_url(self, browser):
             # проверка на корректный url адрес (подстрока "?promo=newYear" есть в текущем url браузера)
-        assert "?promo=newYear" in browser.current_url, "Не корректный url адрес"
+       assert "?promo=newYear" in browser.current_url, "Не корректный url адрес"
 
     def should_be_add_to_basket_button(self):
         assert self.is_element_present(*ProductPageLocators.ADD_TO_BASKET_BUTTON_LOCATOR), "ADD_TO_BASKET_BUTTON is not presented"

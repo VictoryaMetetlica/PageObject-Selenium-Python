@@ -19,14 +19,15 @@ class BasePage():
         self.timeout = timeout                  # устанавливаем значение времени ожидания для атрибута объекта
         self.browser.implicitly_wait(timeout)
 
+    def go_to_basket_from_main(self):
+        view_basket = self.browser.find_element(*BasePageLocators.VIEW_BASKET_BUTTON_MAIN_PAGE_LOCATOR)
+        view_basket.click()
+
     def go_to_login_page(self):
         link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
         link.click()
 
-    def should_be_login_link(self):
-        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
-
-        # реализуем метод is_element_present, в котором будем перехватывать исключение
+         # реализуем метод is_element_present, в котором будем перехватывать исключение
     def is_element_present(self, how, what):
         try:
             self.browser.find_element(how, what)
@@ -66,6 +67,12 @@ class BasePage():
     def open(self):
         self.browser.get(self.url)
 
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+                                                                         " probably unauthorised user"
+    def should_be_login_link(self):
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+
         # Посчитать результат математического выражения для тестов в product_page.py для получения проверочного кода
     def solve_quiz_and_get_code(self) -> object:
         alert = self.browser.switch_to.alert
@@ -80,7 +87,3 @@ class BasePage():
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
-
-    def go_to_basket_from_main(self):
-        view_basket = self.browser.find_element(*BasePageLocators.VIEW_BASKET_BUTTON_MAIN_PAGE_LOCATOR)
-        view_basket.click()
