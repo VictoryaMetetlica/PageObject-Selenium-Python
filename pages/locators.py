@@ -1,8 +1,7 @@
 class MainPageLocators():
         # переменная для логин-локатора
     LOGIN_LINK = ('css selector', "#login_link")
-        # переменная для адреса страницы
-    link = "http://selenium1py.pythonanywhere.com/"
+
 
 class LoginPageLocators():
     LOGIN_FORM = ('css selector', "#login_form")
@@ -16,3 +15,10 @@ class ProductPageLocators():
     BASKET_VALUE_LOCATOR = ('css selector', '.alertinner p strong')
     SUCCESS_MESSAGE = ('css selector', 'alert-success')
 
+class BasePageLocators():
+    LOGIN_LINK = ('css selector', "#login_link")
+    LOGIN_LINK_INVALID = ('css selector', "#login_link_inc")
+    VIEW_BASKET_BUTTON_MAIN_PAGE_LOCATOR = ('css selector', "span a.btn.btn-default")
+
+class BasketPageLocator():
+    BASKET_IS_EMPTY_LOCATOR = ('css selector', '#content_inner > p:nth-child(1)')

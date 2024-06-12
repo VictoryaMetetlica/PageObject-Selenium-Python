@@ -6,13 +6,8 @@ from PageObject_Selenium_Python.pages.login_page import LoginPage
 
         # создадим класс MainPage, сделав его наследником класса BasePage. Класс-предок в Python указывается в скобках
 class MainPage(BasePage):
-
-    def go_to_login_page(self):
-        login_link = self.browser.find_element(*MainPageLocators.LOGIN_LINK)
-        login_link.click()
-            # если на странице появится alert, можно добавить обработку alert
-        #alert = self.browser.switch_to.alert
-        #alert.accept()
-
-    def should_be_login_link(self):
-        assert self.is_element_present(*MainPageLocators.LOGIN_LINK), "Login link is not presented"
+        # В классе MainPage не осталось никаких методов, поэтому добавим заглушку: метод __init__ вызывается при
+        # создании объекта. Конструктор с ключевым словом super вызывает конструктор класса предка и передает ему
+        # аргументы, которые мы передали в конструктор MainPage.
+    def __init__(self, *args, **kwargs):
+        super(MainPage, self).__init__(*args, **kwargs)

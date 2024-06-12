@@ -4,6 +4,7 @@ from selenium.common.exceptions import TimeoutException
 import math
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from PageObject_Selenium_Python.pages.locators import BasePageLocators
 
 # базовая страница (с вспомогательными методами для работы с драйвером), от которой наследуются остальные классы
 class BasePage():
@@ -17,6 +18,13 @@ class BasePage():
             # добавим команду для неявного ожидания со значением по умолчанию в 10
         self.timeout = timeout                  # устанавливаем значение времени ожидания для атрибута объекта
         self.browser.implicitly_wait(timeout)
+
+    def go_to_login_page(self):
+        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
+        link.click()
+
+    def should_be_login_link(self):
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
 
         # реализуем метод is_element_present, в котором будем перехватывать исключение
     def is_element_present(self, how, what):
@@ -72,3 +80,7 @@ class BasePage():
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
+
+    def go_to_basket_from_main(self):
+        view_basket = self.browser.find_element(*BasePageLocators.VIEW_BASKET_BUTTON_MAIN_PAGE_LOCATOR)
+        view_basket.click()

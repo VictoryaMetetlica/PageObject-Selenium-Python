@@ -1,5 +1,4 @@
 import time
-import pytest
 from PageObject_Selenium_Python.pages.base_page import BasePage
 from PageObject_Selenium_Python.pages.locators import ProductPageLocators
 
