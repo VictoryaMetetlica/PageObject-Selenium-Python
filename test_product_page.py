@@ -20,23 +20,24 @@ from PageObject_Selenium_Python.pages.product_page import ProductPage
 from PageObject_Selenium_Python.pages.login_page import LoginPage
 from PageObject_Selenium_Python.conftest import browser
 
-    # фикстура с параметризацией
+    # фикстура с параметризацией (оставила себе для примера)
 #@pytest.mark.parametrize('promo_offer', [0, 1, 2, 3, 4, 5, 6, pytest.param(7, marks=pytest.mark.xfail), 8, 9])
 
-class TestUserAddToBasketFromProductPage(BasePage):
-
+@pytest.mark.login
+class TestUserAddToBasketFromProductPage():
     @pytest.fixture(scope="function", autouse=True)
     def setup(self, browser):
-        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+        link = "http://selenium1py.pythonanywhere.com/en-gb/accounts/login/"
         page = LoginPage(browser, link)
         page.open()
-        email = str(time.time()) + "@fakemail.org"
-        password = str(time.time() + time.time())
+        email = 'A' + str(str(time.time()).split('.')[1]) + "@fakemail.org"
+        password = 'P_AP' + str(str(time.time()).split('.')[1])
         page.register_new_user(email, password)
         page = BasePage(browser, link)
         time.sleep(2)
         page.should_be_authorized_user()
 
+    @pytest.mark.need_review
     def test_user_can_add_product_to_basket(self, browser):
         link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
             # инициализируем Page Object, передаем в конструктор экземпляр драйвера и url адрес
@@ -50,6 +51,7 @@ class TestUserAddToBasketFromProductPage(BasePage):
         page.should_be_same_product_name(page.return_product_name(browser))
         page.should_be_same_price(page.return_price(browser))
         time.sleep(1)
+
     def test_user_cant_see_success_message(self, browser):
         link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
             # инициализируем Page Object, передаем в конструктор экземпляр драйвера и url адрес
@@ -61,7 +63,7 @@ class TestUserAddToBasketFromProductPage(BasePage):
         # page.solve_quiz_and_get_code()
         page.should_not_be_success_message()
 
-
+@pytest.mark.need_review
 def test_guest_can_add_product_to_basket(browser):
     #link = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{promo_offer}"
     link = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
@@ -95,6 +97,7 @@ def test_guest_should_see_login_link_on_product_page(browser):
     page.should_be_login_link()
 
     # гость может перейти на страницу логина со страницы товара
+@pytest.mark.need_review
 def test_guest_can_go_to_login_page_from_product_page(browser):
     link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
     page = ProductPage(browser, link)

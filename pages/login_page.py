@@ -2,6 +2,8 @@ import PageObject_Selenium_Python.pages.locators
 from PageObject_Selenium_Python.pages.base_page import BasePage
 from PageObject_Selenium_Python.pages.locators import LoginPageLocators
 from PageObject_Selenium_Python.pages.locators import MainPageLocators
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 
 class LoginPage(BasePage):
@@ -23,12 +25,19 @@ class LoginPage(BasePage):
         assert self.is_element_present(*LoginPageLocators.REGISTER_FORM), "Register form is not presented"
 
     def register_new_user(self, email, password):
-        email_enter = self.browser.find_element(*LoginPageLocators.EMAIL_FIELD_LOCATOR)
+        email_enter = WebDriverWait(self.browser, 5). \
+            until(EC.presence_of_element_located(LoginPageLocators.EMAIL_REG_FIELD_LOCATOR))
         email_enter.send_keys(email)
-        password_enter = self.browser.find_element(*LoginPageLocators.PASSWORD_FIELD_LOCATOR)
-        password_enter.send_keys(password)
-        log_in_button = self.browser.find_element(*LoginPageLocators.LOG_IN_BUTTON_LOCATOR)
-        log_in_button.click()
+        password1_enter = WebDriverWait(self.browser, 5). \
+            until(EC.presence_of_element_located(LoginPageLocators.PASSWORD_REG1_FIELD_LOCATOR))
+        password1_enter.send_keys(password)
+        password2_enter = WebDriverWait(self.browser, 5). \
+            until(EC.presence_of_element_located(LoginPageLocators.PASSWORD_REG2_FIELD_LOCATOR))
+        password2_enter.send_keys(password)
+        register_button = WebDriverWait(self.browser, 5). \
+            until(EC.presence_of_element_located(LoginPageLocators.REGISTER_BUTTON_LOCATOR))
+        register_button.click()
+        time.sleep(5)
 
 
 
